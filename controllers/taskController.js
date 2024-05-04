@@ -40,7 +40,6 @@ const deleteTask = async (req, res) => {
         const taskDeleted = await taskModel.findByIdAndDelete(req.params.id)
         if (taskDeleted) {return res.status(200).json({msg: "Task removed successfully", title: taskDeleted.title})}
         else return res.status(404).json({msg: "Task not found"})
-        
     } catch (error) {
         res.status(403).json({msg: "Forbidden"})
     }
@@ -50,7 +49,6 @@ const markTaskOk = async (req, res) => {
     try {
         const data = await taskModel.findByIdAndUpdate(req.params.id, {status: "¡Completada!"});
         if(data) {
-            //data.status = "¡Completada!"
             res.status(200).json({msg: "Task marked as completed"})}
         else return res.status(404).json({msg: "Task not found"})
     } catch (error) {
@@ -58,29 +56,27 @@ const markTaskOk = async (req, res) => {
     }
 }
 
-// const markTaskProg = async (req, res) => { 
-//     try {
-//         const data = await taskModel.findByIdAndUpdate(req.params.id, {status: "En Proceso..."});
-//         if(data) {
-//             //data.status = "¡Completada!"
-//             res.status(200).json({msg: "Task marked as in progress"})}
-//         else return res.status(404).json({msg: "Task not found"})
-//     } catch (error) {
-//         res.status(400).json({msg: "You missed parameter 'id'"})
-//     }
-// }
+const markTaskProg = async (req, res) => { 
+    try {
+        const data = await taskModel.findByIdAndUpdate(req.params.id, {status: "En Proceso..."});
+        if(data) {
+            res.status(200).json({msg: "Task marked as in progress"})}
+        else return res.status(404).json({msg: "Task not found"})
+    } catch (error) {
+        res.status(400).json({msg: "You missed parameter 'id'"})
+    }
+}
 
-// const markTaskPend = async (req, res) => { 
-//     try {
-//         const data = await taskModel.findByIdAndUpdate(req.params.id, {status: "Pendiente"});
-//         if(data) {
-//             //data.status = "¡Completada!"
-//             res.status(200).json({msg: "Task marked as in pending"})}
-//         else return res.status(404).json({msg: "Task not found"})
-//     } catch (error) {
-//         res.status(400).json({msg: "You missed parameter 'id'"})
-//     }
-// }
+const markTaskPend = async (req, res) => { 
+    try {
+        const data = await taskModel.findByIdAndUpdate(req.params.id, {status: "Pendiente"});
+        if(data) {
+            res.status(200).json({msg: "Task marked as pending"})}
+        else return res.status(404).json({msg: "Task not found"})
+    } catch (error) {
+        res.status(400).json({msg: "You missed parameter 'id'"})
+    }
+}
 
 module.exports = {
     addTask, 
@@ -88,7 +84,7 @@ module.exports = {
     deleteTask, 
     getTaskId, 
     updateTask, 
-    markTaskOk, 
-    // markTaskProg,
-    // markTaskPend
+    markTaskOk,
+    markTaskProg,
+    markTaskPend
 };
